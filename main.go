@@ -1,7 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
+	"os"
+)
 
 func main() {
-	fmt.Println("Hello Kubernetes!")
+	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
+
+	log.Info().Msg("Hello Kubernetes!")
+
 }
