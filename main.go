@@ -3,22 +3,20 @@ package main
 import (
 	"fmt"
 	"math/rand"
-	"os/signal"
+	"net/http"
 	"time"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"os"
+	"os/signal"
 )
 
 func main() {
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
-
-	log.Info().Msg("Hello Kubernetes!")
-	log.Info().Msg("Guess the number from 0 to 5. Enter -1 to exit.")
+	log.Info().Msg("Hello Kubernetes! Starting automated guessing game.")
 
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-
 	signalChan := make(chan os.Signal, 1)
 	signal.Notify(signalChan, os.Interrupt)
 
@@ -28,32 +26,34 @@ func main() {
 		os.Exit(0)
 	}()
 
-	for {
-		randomNumber := r.Intn(6)
+	go func() {
+		for {
+			randomNumber := r.Intn(6)
+			userGuess := r.Intn(6)
 
-		var userGuess int
-		log.Info().Msg("Enter your guess: ")
+			log.Info().Int("User Guess", userGuess).Msg("Generated guess")
+			log.Info().Int("Random Number", randomNumber).Msg("Generated number")
 
-		_, err := fmt.Scan(&userGuess)
+			if userGuess == randomNumber {
+				log.Info().Msg("You WIN!")
+			} else {
+				log.Info().Msg("You LOSE!")
+			}
+
+			time.Sleep(5 * time.Second)
+		}
+	}()
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		_, err := fmt.Fprintln(w, "Welcome to the automated guessing game!")
 		if err != nil {
-			log.Error().Err(err).Msg("Failed to read input")
-			continue
+			return
 		}
+	})
 
-		if userGuess == -1 {
-			log.Info().Msg("Exiting the game. Goodbye!")
-			fmt.Println("Exiting the game. Goodbye!")
-			break
-		}
-
-		log.Info().Int("Random Number", randomNumber).Msg("Generated number")
-
-		if userGuess == randomNumber {
-			log.Info().Msg("You WIN!")
-			fmt.Println("You WIN!")
-		} else {
-			log.Info().Msg("You LOSE!")
-			fmt.Println("You LOSE!")
-		}
+	log.Info().Msg("Starting HTTP server on port 8080")
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		return
 	}
 }

@@ -1,19 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: go-kubernetes-app
+  name: go-k8s-local-pod
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: go-kubernetes-app
+      app: go-k8s-local-app
   template:
     metadata:
       labels:
-        app: go-kubernetes-app
+        app: go-k8s-local-app
     spec:
       containers:
         - name: go-kubernetes-container
-          image: go-kubernetes-image
+          image: coolersai/go-kubernetes-image:latest
+          imagePullPolicy: Never
           ports:
             - containerPort: 8080
