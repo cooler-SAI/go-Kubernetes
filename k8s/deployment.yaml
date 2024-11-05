@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-kubernetes-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-kubernetes-app
+  template:
+    metadata:
+      labels:
+        app: go-kubernetes-app
+    spec:
+      containers:
+        - name: go-kubernetes-container
+          image: go-kubernetes-image
+          ports:
+            - containerPort: 8080

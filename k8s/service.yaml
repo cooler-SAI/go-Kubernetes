@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-kubernetes-service
+spec:
+  type: NodePort
+  selector:
+    app: go-kubernetes-app
+  ports:
+    - port: 8080        # Порт, на котором работает приложение внутри контейнера
+      targetPort: 8080   # Порт, на который направляются запросы
+      nodePort: 30000    # Внешний порт для доступа к сервису
