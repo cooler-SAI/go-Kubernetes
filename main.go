@@ -32,7 +32,8 @@ func main() {
 		randomNumber := r.Intn(6)
 
 		var userGuess int
-		fmt.Print("Enter your guess: ")
+		log.Info().Msg("Enter your guess: ")
+
 		_, err := fmt.Scan(&userGuess)
 		if err != nil {
 			log.Error().Err(err).Msg("Failed to read input")
