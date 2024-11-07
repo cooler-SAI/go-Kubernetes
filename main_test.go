@@ -28,7 +28,7 @@ func TestHTTPServer(t *testing.T) {
 
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		_, _ = fmt.Fprintln(w, "Welcome to the automated guessing game!")
+		_, _ = fmt.Fprint(w, "Welcome to the automated guessing game!")
 	})
 
 	log.Info().Msg("Sending request to handler")
@@ -49,7 +49,7 @@ func TestRandomNumberGeneration(t *testing.T) {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	for i := 0; i < 100; i++ {
 		num := r.Intn(6)
-		log.Debug().Int("generated_number", num).Msg("Generated random number")
+		log.Debug().Int("generated_number ", num).Msg("Generated random number")
 
 		if num < 0 || num > 5 {
 			log.Error().Int("invalid_number", num).Msg("Generated number out of range")
