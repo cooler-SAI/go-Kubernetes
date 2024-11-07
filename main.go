@@ -14,6 +14,7 @@ import (
 
 func main() {
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
+
 	log.Info().Msg("Hello Kubernetes! Starting automated guessing game.")
 
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
