@@ -28,7 +28,7 @@ func TestHTTPServer(t *testing.T) {
 
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		_, _ = fmt.Fprint(w, "Welcome to the automated guessing game!")
+		_, _ = fmt.Fprintln(w, "Welcome to the automated guessing game!")
 	})
 
 	log.Info().Msg("Sending request to handler")
