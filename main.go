@@ -43,8 +43,8 @@ func main() {
 	http.HandleFunc("/guess", handleGuess)
 
 	// Start the HTTP server
-	log.Info().Msg("Starting HTTP server on port 8080")
-	err := http.ListenAndServe(":8080", nil)
+	log.Info().Msg("Starting HTTP server on port 8081")
+	err := http.ListenAndServe(":8081", nil)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to start server")
 	}
