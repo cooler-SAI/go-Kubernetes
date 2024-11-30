@@ -13,8 +13,8 @@ spec:
         app: go-k8s-local-app
     spec:
       containers:
-        - name: go-kubernetes-container
+        - name: go-kubernetes-k8s-container
           image: coolersai/go-kubernetes-image:latest
-          imagePullPolicy: Never
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
