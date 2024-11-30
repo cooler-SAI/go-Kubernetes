@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: go-k8s-local-pod
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: go-k8s-local-app
